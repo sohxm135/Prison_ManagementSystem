@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureGuard - Prison Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-header">
+            <i class="fas fa-shield-alt logo-icon"></i>
+            <h1>SecureGuard</h1>
+            <p>Prison Management System</p>
+        </div>
+        <div class="login-form">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="login-btn">Login <i class="fas fa-sign-in-alt"></i></button>
+                </div>
+                <p id="error-message" class="error-message"></p>
+            </form>
+        </div>
+        <div class="login-footer">
+            <p>&copy; 2025 SecureGuard Prison Management System</p>
+        </div>
+    </div>
+    <script src="login.js"></script>
+</body>
+</html>
