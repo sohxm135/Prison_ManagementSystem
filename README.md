@@ -16,6 +16,11 @@ This system allows correctional staff and administrators to manage:
 
 The application is modular and scalable, suitable for small to mid-sized correctional institutions seeking a robust, low-maintenance solution.
 
+## Project Report
+
+For detailed documentation and analysis, refer to the [Project Report](https://docs.google.com/document/d/1fdqVWQo-CYJJzd1Lyrjf8fKkTsQSv_9FoGKKS06aUTQ/edit?usp=sharing).
+
+
 ## Technology Stack
 
 **Frontend:**  
