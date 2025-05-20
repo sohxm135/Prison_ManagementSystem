@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SecureGuard - Admin Panel</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="admin-body">
+  <div class="admin-container">
+    <div class="login-header">
+      <i class="fas fa-shield-alt logo-icon"></i>
+      <h1>SecureGuard</h1>
+      <p>Prison Management System - Admin Panel</p>
+    </div>
+    
+    <div class="admin-content">
+      <h2><i class="fas fa-user-plus"></i> Add New Employee</h2>
+      <form id="employeeForm" class="admin-form">
+        <div class="form-group">
+          <label for="username"><i class="fas fa-user"></i> Username</label>
+          <input type="text" id="username" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> Password</label>
+          <input type="password" id="password" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="type"><i class="fas fa-user-tag"></i> Employee Type</label>
+          <select id="type" required>
+            <option value="">-- Select Type --</option>
+            <option value="Warden">Warden</option>
+            <option value="Chief Jailor">Chief Jailor</option>
+            <option value="Jailor">Jailor</option>
+            <option value="Guard">Guard</option>
+          </select>
+        </div>
+        
+        <div class="form-group button-group">
+          <button type="submit" class="primary-btn"><i class="fas fa-save"></i> Save Employee</button>
+          <!-- <button type="button" id="toggleTableBtn" class="secondary-btn"><i class="fas fa-table"></i> Show Employee Table</button> -->
+        </div>
+      </form>
+      
+      <div id="statusMessage" class="status-message hidden"></div>
+      
+      <div class="employee-section">
+        <div class="employee-list" id="employeeList">
+          <h3><i class="fas fa-users"></i> Saved Employees</h3>
+          <!-- Employee cards will be added here -->
+        </div>
+        
+        <div id="employeeTableContainer" class="hidden table-container">
+          <h3><i class="fas fa-table"></i> Employee Credentials Table</h3>
+          <table id="employeeTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Employee Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Table rows will be added here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <div class="login-footer">
+      <p>&copy; 2025 SecureGuard Prison Management System</p>
+      <div class="navigation-links">
+        <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('employeeForm');
+    const employeeListDiv = document.getElementById('employeeList');
+    const employeeTableContainer = document.getElementById('employeeTableContainer');
+    const employeeTableBody = document.querySelector('#employeeTable tbody');
+    const toggleTableBtn = document.getElementById('toggleTableBtn');
+    const statusMessage = document.getElementById('statusMessage');
+
+    // Check if user is admin, if not redirect to login page
+    function checkAuth() {
+      const isAdmin = sessionStorage.getItem('role') === 'admin';
+      if (!isAdmin) {
+        window.location.href = "index.html";
+      }
+    }
+
+    // Run auth check immediately
+    checkAuth();
+
+    // Load employees from the database when the page loads
+    document.addEventListener('DOMContentLoaded', fetchEmployees);
+
+    // Fetch all employees from the database
+    async function fetchEmployees() {
+      try {
+        const response = await fetch('/api/admin/employees');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch employees');
+        }
+        
+        const employees = await response.json();
+        
+        // Display employees
+        displayEmployeesFromDB(employees);
+        updateTableFromDB(employees);
+      } catch (error) {
+        console.error('Error fetching employees:', error);
+        showStatus('Error loading employees: ' + error.message, 'error');
+      }
+    }
+
+    // Submit the form to add a new employee
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const type = document.getElementById('type').value;
+
+      if (username && password && type) {
+        try {
+          const response = await fetch('/api/admin/employees', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password, type })
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            showStatus(result.message, 'success');
+            form.reset();
+            // Refresh the employee lists
+            fetchEmployees();
+          } else {
+            showStatus(result.message, 'error');
+          }
+        } catch (error) {
+          console.error('Error adding employee:', error);
+          showStatus('Error adding employee: ' + error.message, 'error');
+        }
+      }
+    });
+
+    // Toggle table visibility
+    if (toggleTableBtn) {
+      toggleTableBtn.addEventListener('click', () => {
+        employeeTableContainer.classList.toggle('hidden');
+        toggleTableBtn.innerHTML = employeeTableContainer.classList.contains('hidden')
+          ? '<i class="fas fa-table"></i> Show Employee Table'
+          : '<i class="fas fa-table"></i> Hide Employee Table';
+      });
+    }
+
+    // Display employees as cards
+    function displayEmployeesFromDB(employees) {
+      employeeListDiv.innerHTML = "<h3><i class='fas fa-users'></i> Saved Employees</h3>";
+      
+      if (employees.length === 0) {
+        const emptyMessage = document.createElement('p');
+        emptyMessage.classList.add('empty-message');
+        emptyMessage.textContent = 'No employees found.';
+        employeeListDiv.appendChild(emptyMessage);
+        return;
+      }
+      
+      employees.forEach((emp, index) => {
+        const empCard = document.createElement("div");
+        empCard.className = "employee-card";
+        empCard.innerHTML = `
+          <div class="employee-header">
+            <i class="fas ${getEmployeeIcon(emp.type)}"></i>
+            <strong>Employee #${index + 1}</strong>
+          </div>
+          <div class="employee-details">
+            <p><i class="fas fa-user"></i> <strong>Username:</strong> ${emp.username}</p>
+            <p><i class="fas fa-lock"></i> <strong>Password:</strong> ${emp.password}</p>
+            <p><i class="fas fa-user-tag"></i> <strong>Type:</strong> ${emp.type || 'Not specified'}</p>
+          </div>
+        `;
+        employeeListDiv.appendChild(empCard);
+      });
+    }
+
+    // Update table with employees
+    function updateTableFromDB(employees) {
+      employeeTableBody.innerHTML = "";
+      employees.forEach((emp, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${emp.username}</td>
+          <td>${emp.password}</td>
+          <td>${emp.type || 'Not specified'}</td>
+        `;
+        employeeTableBody.appendChild(row);
+      });
+    }
+
+    // Get appropriate icon based on employee type
+    function getEmployeeIcon(type) {
+      switch(type) {
+        case 'Warden': return 'fa-user-tie';
+        case 'Chief Jailor': return 'fa-user-shield';
+        case 'Jailor': return 'fa-user-shield';
+        case 'Guard': return 'fa-user-shield';
+        case 'Clerk': return 'fa-user-edit';
+        case 'Technician': return 'fa-user-cog';
+        default: return 'fa-user';
+      }
+    }
+    
+    // Show status message
+    function showStatus(message, type) {
+      statusMessage.textContent = message;
+      statusMessage.className = 'status-message';
+      statusMessage.classList.add(type);
+      statusMessage.classList.remove('hidden');
+      
+      // Hide message after 5 seconds
+      setTimeout(() => {
+        statusMessage.classList.add('hidden');
+      }, 5000);
+    }
+  </script>
+  
+  <!-- Updated inline styles for better responsiveness -->
+  <style>
+    .admin-body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    
+    .admin-container {
+      width: 95%;
+      max-width: 1000px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      overflow: visible;
+      margin: 20px 0;
+    }
+    
+    .login-header {
+      background-color: #002244;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .logo-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    
+    .admin-content {
+      padding: 25px;
+      overflow: auto;
+    }
+    
+    .admin-form {
+      margin-bottom: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .primary-btn, .secondary-btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .primary-btn {
+      background-color: #002244;
+      color: white;
+    }
+    
+    .secondary-btn {
+      background-color: #e0e0e0;
+      color: #333;
+    }
+    
+    .primary-btn:hover {
+      background-color: #003366;
+    }
+    
+    .secondary-btn:hover {
+      background-color: #d0d0d0;
+    }
+    
+    .employee-section {
+      margin-top: 30px;
+    }
+    
+    .employee-card {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      overflow: hidden;
+    }
+    
+    .employee-header {
+      background-color: #002244;
+      color: white;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .employee-details {
+      padding: 15px;
+    }
+    
+    .employee-details p {
+      margin: 5px 0;
+      word-break: break-word;
+    }
+    
+    .table-container {
+      margin-top: 20px;
+      overflow-x: auto;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    
+    th {
+      background-color: #002244;
+      color: white;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .login-footer {
+      background-color: #f5f5f5;
+      padding: 15px;
+      text-align: center;
+      border-top: 1px solid #eee;
+    }
+    
+    .navigation-links {
+      margin-top: 10px;
+    }
+    
+    .navigation-links a {
+      color: #002244;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    
+    .navigation-links a:hover {
+      text-decoration: underline;
+    }
+
+    .status-message {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .status-message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .status-message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .empty-message {
+      text-align: center;
+      color: #666;
+      margin: 20px 0;
+      font-style: italic;
+    }
+    
+    /* Added responsive styles */
+    @media (max-width: 768px) {
+      .admin-body {
+        padding: 10px;
+      }
+      
+      .admin-container {
+        width: 100%;
+        margin: 10px 0;
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      .primary-btn, .secondary-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</body>
+</html>

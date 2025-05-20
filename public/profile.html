@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - SecureGuard Prison Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>/* Modal Styles */
+        .modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .password-requirements {
+            display: block;
+            margin-top: 5px;
+            color: var(--gray-color);
+            font-size: 12px;
+        }
+        
+        .save-btn {
+            background-color: var(--accent-color);
+        }
+        
+        .save-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            max-width: 350px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1050;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .notification.success {
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .notification.error {
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        .notification.info {
+            border-left: 4px solid var(--info-color);
+        }
+        
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .notification-content i {
+            font-size: 20px;
+        }
+        
+        .notification.success i {
+            color: var(--success-color);
+        }
+        
+        .notification.error i {
+            color: var(--danger-color);
+        }
+        
+        .notification.info i {
+            color: var(--info-color);
+        }
+        
+        .close-notification {
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        /* Responsive adjustments for modals */
+        @media screen and (max-width: 768px) {
+            .modal {
+                width: 95%;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }</style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-shield-alt"></i> SecureGuard</h2>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="profile.html" class="active"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="jail-info.html"><i class="fas fa-building"></i> Prison Information</a></li>
+                <li><a href="prisoners.html"><i class="fas fa-users"></i> Prisoners</a></li>
+                <li><a href="staff.html"><i class="fas fa-id-card"></i> Staff</a></li>
+                <li><a href="cases.html"><i class="fas fa-gavel"></i> Cases</a></li>
+                <li><a href="disciplinary.html"><i class="fas fa-balance-scale"></i> Disciplinary Actions</a></li>
+                <li><a href="work-assigned.html"><i class="fas fa-tasks"></i> Work Assigned</a></li>
+                <li><a href="library.html"><i class="fas fa-book"></i> Library</a></li>
+                <li><a href="call-logs.html"><i class="fas fa-phone"></i> Call Logs</a></li>
+                <li><a href="visitors.html"><i class="fas fa-user-friends"></i> Visitors</a></li>
+                <li><a href="lawyer.html"><i class="fas fa-gavel"></i> Lawyer</a></li>
+                <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="topbar">
+            <button class="toggle-sidebar"><i class="fas fa-bars"></i></button>
+            <div class="user-info">
+                <div class="dropdown">
+                    <span><B>Warden User</B></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-container">
+            <div class="profile-sidebar">
+                <h2 class="profile-name">Loading...</h2>
+                <p class="profile-role">Warden</p>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">--</span>
+                        <span class="stat-label">Years of Experience</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">W-XXX</span>
+                        <span class="stat-label">EmployeeID</span>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn">Edit Profile</button>
+                    <button class="btn">Change Password</button>
+                </div>
+            </div>
+            <div class="profile-content">
+                <div class="profile-tabs">
+                    <div class="profile-tab active" data-tab="personal">Personal Info</div>
+                </div>
+                <div class="tab-content active" id="personal">
+                    <div class="profile-info">
+                        <div class="info-group">
+                            <span class="info-label">Salary</span>
+                            <span class="info-value">--</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Age</span>
+                            <span class="info-value">--</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Gender</span>
+                            <span class="info-value">--</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Contact</span>
+                            <span class="info-value">--</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Date of Joining</span>
+                            <span class="info-value">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="profile.js"></script>
+</body>
+</html>

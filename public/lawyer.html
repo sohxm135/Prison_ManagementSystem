@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SecureGuard - Lawyer Meetings</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-shield-alt"></i> SecureGuard</h2>
+          </div>
+          <div class="sidebar-menu">
+            <!-- <nav> -->
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                    <li><a href="profile.html"><i class="fas fa-user"></i>Profile</a></li>
+                    <li><a href="jail-info.html"><i class="fas fa-building"></i>Prison Information</a></li>
+                    <li><a href="prisoners.html"><i class="fas fa-users"></i>Prisoners</a></li>
+                    <li><a href="staff.html"><i class="fas fa-id-card"></i>Staff</a></li>
+                    <li><a href="cases.html"><i class="fas fa-gavel"></i>Cases</a></li>
+                    <li><a href="disciplinary.html"><i class="fas fa-balance-scale"></i>Disciplinary Actions</a></li>
+                    <li><a href="work-assigned.html"><i class="fas fa-tasks"></i>Work Assigned</a></li>
+                    <li><a href="library.html"><i class="fas fa-book"></i>Library</a></li>
+                    <li><a href="call-logs.html"><i class="fas fa-phone"></i>Call Logs</a></li>
+                    <li><a href="visitors.html"><i class="fas fa-user-friends"></i>Visitors</a></li>
+                    <li><a href="lawyer.html" class="active"><i class="fas fa-gavel"></i>Lawyer</a></li>
+                <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+                </ul>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="topbar">
+                <button class="toggle-sidebar"><i class="fas fa-bars"></i></button>
+                <div class="user-info">
+                    <!-- <img src="./image.png" alt="User"> -->
+                    <div class="dropdown">
+                        <span><B>Warden User</B></span>
+                        <!-- <div class="dropdown-content">
+                            <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <h1 class="page-title">Lawyer Meetings</h1>            
+            <div class="case-filters">
+                <div class="filter-group" style="display: flex; gap: 20px; align-items: center;">
+                    <div>
+                        <label>Search:</label>
+                        <input type="text" placeholder="Search by lawyerID">
+                    </div>
+                    
+                    <!-- <div>
+                        <label>Meeting Date:</label>
+                        <input type="date" placeholder="Filter by date">
+                    </div> -->
+            
+                    <!-- <button class="btn">Apply Filters</button> -->
+                    <button class="btn">Add Lawyer</button>
+                </div>
+            </div>
+            
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Lawyer ID</th>
+                            <th>Lawyer Name</th>
+                            <th>Contact Number</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>L-101</td>
+                            <td>Amit Verma</td>
+                            <td>+91 9876543211</td>
+                            <td>
+                                <button class="btn edit-btn">Edit</button>
+                                <button class="btn delete-btn">Delete</button>
+                                <button class="btn view-btn" onclick="window.location.href='lawyer-details.html?id=L-101'">View</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>L-102</td>
+                            <td>Priya Sharma</td>
+                            <td>+91 9876543212</td>
+                            <td>
+                                <button class="btn edit-btn">Edit</button>
+                                <button class="btn delete-btn">Delete</button>
+                                <button class="btn view-btn" onclick="window.location.href='lawyer-details.html?id=L-102'">View</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+        <script src="lawyer.js"></script>
+</body>
+</html>

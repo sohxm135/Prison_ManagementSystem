@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Management - SecureGuard Prison Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-shield-alt"></i> SecureGuard</h2>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="jail-info.html"><i class="fas fa-building"></i> Prison Information</a></li>
+                <li><a href="prisoners.html"><i class="fas fa-users"></i> Prisoners</a></li>
+                <li><a href="staff.html" class="active"><i class="fas fa-id-card"></i> Staff</a></li>
+                <li><a href="cases.html"><i class="fas fa-gavel"></i> Cases</a></li>
+                <!-- <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li> -->
+                <!-- <li><a href="cases.html"><i class="fas fa-gavel"></i> Cases</a></li> -->
+        <li><a href="disciplinary.html"><i class="fas fa-balance-scale"></i> Disciplinary Actions</a></li>
+        <li><a href="work-assigned.html"><i class="fas fa-tasks"></i> Work Assigned</a></li>
+        <li><a href="library.html"><i class="fas fa-book"></i> Library</a></li>
+        <li><a href="call-logs.html"><i class="fas fa-phone"></i> Call Logs</a></li>
+        <li><a href="visitors.html"><i class="fas fa-user-friends"></i> Visitors</a></li>
+        <li><a href="lawyer.html"><i class="fas fa-gavel"></i> Lawyer</a></li>
+        <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="topbar">
+            <button class="toggle-sidebar"><i class="fas fa-bars"></i></button>
+            <div class="user-info">
+                <!-- <img src="./image.png" alt="User"> -->
+                <div class="dropdown">
+                    <span><B>Warden User</B></span>
+                    <!-- <div class="dropdown-content">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="staff-header">
+            <h1 class="page-title">Staff Management</h1>
+            <div class="staff-actions">
+                <button class="btn"><i class="fas fa-plus"></i> Add Staff</button>
+                <div class="prisoner-search">
+                    <input type="text" placeholder="Search staff...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- <div class="staff-tabs">
+            <div class="staff-tab active" data-tab="warden">Warden</div>
+            <div class="staff-tab" data-tab="chief-jailor">Chief Jailor</div>
+            <div class="staff-tab" data-tab="jailor">Jailor</div>
+            <div class="staff-tab" data-tab="guards">Guards</div>
+        </div> -->
+        
+        <div class="staff-grid">
+            <div class="staff-card">
+                <!-- <div class="staff-header">
+                    <img src="https://via.placeholder.com/80" alt="Staff" class="staff-image">
+                </div> -->
+                <div class="staff-body">
+                    <h3 class="staff-name">John Smith</h3>
+                    <p class="staff-role">Warden</p>
+                    <div class="staff-info">
+                        <div class="staff-info-item">
+                            <span class="info-label">ID</span>
+                            <span class="info-value">W-101</span>
+                        </div>
+                        <div class="staff-info-item">
+                            <span class="info-label">Age</span>
+                            <span class="info-value">45</span>
+                        </div>
+                        <div class="staff-info-item">
+                            <span class="info-label">Gender</span>
+                            <span class="info-value">Male</span>
+                        </div>
+                        <div class="staff-info-item">
+                            <span class="info-label">Experience</span>
+                            <span class="info-value">15 years</span>
+                        </div>
+                    </div>
+                    <div class="staff-footer">
+                        <button class="view-btn">View Details</button>
+                        <button class="edit-btn">Edit</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="staff-card">
+                <!-- <div class="staff-header">
+                    <img src="https://via.placeholder.com/80" alt="Staff" class="staff-image">
+                </div> -->
+                <div class="staff-body">
+                    <h3 class="staff-name">Michael Johnson</h3>
+                    <p class="staff-role">Chief Jailor</p>
+                    <div class="staff-info">
+                        <div class="staff-info-item">
+                            <span class="info-label">ID</span>
+                            <span class="info-value">CJ-201</span>
+                        </div>
+                        <div class="staff-info-item">
+                            <span class="info-label">Age</span>
+                            <span class="info-value">42</span>
+                        </div>
+                        <div class="staff-info-item">
+                            <span class="info-label">Gender</span>
+                            <span class="info-value">Male</span>
+                        </div>
+                        <div class="staff-info-item">
+                            <span class="info-label">Experience</span>
+                            <span class="info-value">12 years</span>
+                        </div>
+                    </div>
+                    <div class="staff-footer">
+                        <button class="view-btn">View Details</button>
+                        <button class="edit-btn">Edit</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="staff-card">
+                <!-- <div class="staff-header">
+                    <img src="https://via.placeholder.com/80" alt="Staff" class="staff-image">
+                </div> -->
+                <div class="staff-body">
+                    <h3 class="staff-name">Sarah Williams</h3>
+                    <p class="staff-role">Jailor</p>
+                    <div class="staff-info">
+                        <div class="staff-info-item">
+                            <span class="info-label">ID</span>
+                            <span class="info-value">J-301</span>
+                        </div>
+                        <div class="staff-info-item">
+                            <span class="info-label">Age</span>
+                            <span class="info-value">35</span>
+                        </div>
+                        <div class="staff-info-item">
+                            <span class="info-label">Gender</span>
+                            <span class="info-value">Female</span>
+                        </div>
+                        <div class="staff-info-item">
+                            <span class="info-label">Experience</span>
+                            <span class="info-value">8 years</span>
+                        </div>
+                    </div>
+                    <div class="staff-footer">
+                        <button class="view-btn">View Details</button>
+                        <button class="edit-btn">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+    <script src="staff.js"></script>
+</body>
+</html>

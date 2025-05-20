@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Management - SecureGuard Prison Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-shield-alt"></i> SecureGuard</h2>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="jail-info.html"><i class="fas fa-building"></i> Prison Information</a></li>
+                <li><a href="prisoners.html"><i class="fas fa-users"></i> Prisoners</a></li>
+                <li><a href="staff.html"><i class="fas fa-id-card"></i> Staff</a></li>
+                <li><a href="cases.html" class="active"><i class="fas fa-gavel"></i> Cases</a></li>
+                <!-- <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li> -->
+                <!-- <li><a href="cases.html"><i class="fas fa-gavel"></i> Cases</a></li> -->
+        <li><a href="disciplinary.html"><i class="fas fa-balance-scale"></i> Disciplinary Actions</a></li>
+        <li><a href="work-assigned.html"><i class="fas fa-tasks"></i> Work Assigned</a></li>
+        <li><a href="library.html"><i class="fas fa-book"></i> Library</a></li>
+        <li><a href="call-logs.html"><i class="fas fa-phone"></i> Call Logs</a></li>
+        <li><a href="visitors.html"><i class="fas fa-user-friends"></i> Visitors</a></li>
+        <li><a href="lawyer.html"><i class="fas fa-gavel"></i> Lawyer</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="topbar">
+            <button class="toggle-sidebar"><i class="fas fa-bars"></i></button>
+            <div class="user-info">
+                <!-- <img src="./image.png" alt="User"> -->
+                <div class="dropdown">
+                    <span><B>Warden User</B></span>
+                    <!-- <div class="dropdown-content">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="case-header">
+            <h1 class="page-title">Case Management</h1>
+            <div class="case-actions">
+                <button class="btn"><i class="fas fa-plus"></i> Add Case</button>
+            </div>
+        </div>
+        
+        <div class="case-filters">
+            <div class="filter-group">
+                <label>Status:</label>
+                <select>
+                    <option value="all">All Cases</option>
+                    <option value="ongoing">Ongoing</option>
+                    <option value="closed">Closed</option>
+                </select>
+            </div>
+            <!-- <div class="filter-group">
+                <label>Sort By:</label>
+                <select>
+                    <option value="recent">Most Recent</option>
+                    <option value="prisoner">Prisoner Name</option>
+                    <option value="lawyer">Lawyer Name</option>
+                </select>
+            </div> -->
+            <div class="prisoner-search">
+                <input type="text" placeholder="Search cases...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        
+        <div class="case-list">
+            <div class="case-card">
+                <h3 class="case-title">Case #10045</h3>
+                <div class="case-meta">
+                    <span><i class="fas fa-calendar"></i> Opened: Jan 15, 2025</span>
+                    <span><i class="fas fa-user"></i> Prisoner: John Doe</span>
+                    <span><i class="fas fa-briefcase"></i> Lawyer: James Wilson</span>
+                </div>
+                <div class="case-details">
+                    <div class="case-detail-item">
+                        <span class="info-label">Crime</span>
+                        <span class="info-value">Felony</span>
+                    </div>
+                    <div class="case-detail-item">
+                        <span class="info-label">Sentence</span>
+                        <span class="info-value">TBD</span>
+                    </div>
+                    <div class="case-detail-item">
+                        <span class="info-label">Prisoner ID</span>
+                        <span class="info-value">P-1001</span>
+                    </div>
+                    <div class="case-detail-item">
+                        <span class="info-label">Lawyer ID</span>
+                        <span class="info-value">L-201</span>
+                    </div>
+                </div>
+                <span class="case-status status-ongoing">Ongoing</span>
+                <div class="case-footer">
+                    <!-- <button class="view-btn">View Details</button> -->
+                    <div class="case-actions">
+                        <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="case-card">
+                <h3 class="case-title">Case #10042</h3>
+                <div class="case-meta">
+                    <span><i class="fas fa-calendar"></i> Opened: Dec 10, 2024</span>
+                    <span><i class="fas fa-user"></i> Prisoner: Jane Smith</span>
+                    <span><i class="fas fa-briefcase"></i> Lawyer: Sarah Johnson</span>
+                </div>
+                <div class="case-details">
+                    <div class="case-detail-item">
+                        <span class="info-label">Crime</span>
+                        <span class="info-value">Misdemeanor</span>
+                    </div>
+                    <div class="case-detail-item">
+                        <span class="info-label">Sentence</span>
+                        <span class="info-value">1 year</span>
+                    </div>
+                    <div class="case-detail-item">
+                        <span class="info-label">Prisoner ID</span>
+                        <span class="info-value">P-1002</span>
+                    </div>
+                    <div class="case-detail-item">
+                        <span class="info-label">Lawyer ID</span>
+                        <span class="info-value">L-205</span>
+                    </div>
+                </div>
+                <span class="case-status status-closed">Closed</span>
+                <div class="case-footer">
+                    <!-- <button class="view-btn">View Details</button> -->
+                    <div class="case-actions">
+                        <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+    <script src="cases.js"></script>
+</body>
+</html>

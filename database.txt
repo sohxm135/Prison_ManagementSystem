@@ -1,0 +1,319 @@
+INSERT INTO Warden (employeeID,name,age,gender,contact_no,salary,DOJ,YOE) 
+VALUES ('W001','Rakesh Kumar',44,'M','9876543210',75000.00,TO_DATE('2010-06-01', 'YYYY-MM-DD'),0);
+
+INSERT INTO Warden (employeeID, name, age, gender, contact_no, salary, DOJ, YOE) 
+VALUES ('W002', 'Tom Riddle', 44, 'M', '9876543219', 75000.00, TO_DATE('2010-06-01', 'YYYY-MM-DD'), 0);
+
+INSERT INTO Warden (employeeID,name,age,gender,contact_no,salary,DOJ,YOE) 
+VALUES ('W002','Voldemort',44,'M','9876543219',75000.00,TO_DATE('2010-06-01', 'YYYY-MM-DD'),0);
+
+INSERT INTO Chief_Jailor (employeeID, name, age, gender, contact_no, salary, DOJ, YOE) VALUES
+('CJ001', 'John Doe', 45, 'M', '9876543210', 55000.00, TO_DATE('2010-01-15', 'YYYY-MM-DD'), 0);
+INSERT INTO Chief_Jailor (employeeID, name, age, gender, contact_no, salary, DOJ, YOE) VALUES
+('CJ002', 'Jane Smith', 50, 'F', '8765432109', 57000.00, TO_DATE('2005-03-20', 'YYYY-MM-DD'), 0);
+INSERT INTO Chief_Jailor (employeeID, name, age, gender, contact_no, salary, DOJ, YOE) VALUES
+('CJ003', 'Robert Brown', 48, 'M', '7654321098', 56000.00, TO_DATE('2008-07-10', 'YYYY-MM-DD'), 0);
+
+
+--jail
+INSERT INTO Jail (jailID, name, chiefJailorID, securityLevel, capacity) VALUES
+('J001', 'Alcatraz', 'CJ001', 'High', 0);
+INSERT INTO Jail (jailID, name, chiefJailorID, securityLevel, capacity) VALUES
+('J002', 'San Quentin', 'CJ002', 'Medium', 0);
+INSERT INTO Jail (jailID, name, chiefJailorID, securityLevel, capacity) VALUES
+('J003', 'Folsom', 'CJ003', 'Low', 0);
+
+--block
+INSERT INTO Block (blockID, jailID, name, jailorID, capacity) VALUES
+('B001', 'J001', 'Block A', 'J001', 0);
+INSERT INTO Block (blockID, jailID, name, jailorID, capacity) VALUES
+('B002', 'J001', 'Block B', 'J002', 0);
+INSERT INTO Block (blockID, jailID, name, jailorID, capacity) VALUES
+('B003', 'J002', 'Block C', 'J003', 0);
+INSERT INTO Block (blockID, jailID, name, jailorID, capacity) VALUES
+('B004', 'J002', 'Block D', 'J004', 0);
+INSERT INTO Block (blockID, jailID, name, jailorID, capacity) VALUES
+('B005', 'J003', 'Block E', 'J005', 0);
+INSERT INTO Block (blockID, jailID, name, jailorID, capacity) VALUES
+('B006', 'J003', 'Block F', 'J006', 0);
+
+--jailor
+INSERT INTO Jailor (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, supervisorID) VALUES
+('J001', 'Alice Green', 35, 'F', '6543210987', 48000.00, TO_DATE('2015-05-12', 'YYYY-MM-DD'), 10, 'CJ001');
+INSERT INTO Jailor (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, supervisorID) VALUES
+('J002', 'Bob White', 38, 'M', '5432109876', 49000.00, TO_DATE('2014-08-15', 'YYYY-MM-DD'), 11, 'CJ001');
+INSERT INTO Jailor (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, supervisorID) VALUES
+('J003', 'Charlie Black', 40, 'M', '4321098765', 50000.00, TO_DATE('2013-06-20', 'YYYY-MM-DD'), 12, 'CJ002');
+INSERT INTO Jailor (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, supervisorID) VALUES
+('J004', 'Diana Blue', 36, 'F', '3210987654', 48500.00, TO_DATE('2015-09-10', 'YYYY-MM-DD'), 10, 'CJ002');
+INSERT INTO Jailor (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, supervisorID) VALUES
+('J005', 'Eve Yellow', 42, 'F', '2109876543', 51000.00, TO_DATE('2012-04-15', 'YYYY-MM-DD'), 13, 'CJ003');
+INSERT INTO Jailor (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, supervisorID) VALUES
+('J006', 'Frank Red', 39, 'M', '1098765432', 49500.00, TO_DATE('2014-03-25', 'YYYY-MM-DD'), 11, 'CJ003');
+
+
+-- new trigger:
+CREATE OR REPLACE TRIGGER update_jail_capacity
+AFTER INSERT OR UPDATE OR DELETE ON Block
+BEGIN
+    -- Update all jails (less efficient but simpler)
+    UPDATE Jail j
+    SET capacity = (SELECT COUNT(*) FROM Block b WHERE b.jailID = j.jailID);
+END;
+/
+
+--cell table
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C001', 'B001', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C002', 'B001', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C003', 'B001', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C004', 'B002', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C005', 'B002', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C006', 'B002', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C007', 'B003', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C008', 'B003', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C009', 'B003', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C010', 'B004', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C011', 'B004', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C012', 'B004', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C013', 'B005', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C014', 'B005', 0);
+INSERT INTO Cell (cellID, blockID, isOccupied) VALUES
+('C015', 'B006', 0);
+
+
+--new trigger:
+CREATE OR REPLACE TRIGGER update_block_capacity
+AFTER INSERT OR UPDATE OR DELETE ON Cell
+BEGIN
+    -- Update all blocks 
+    UPDATE Block b
+    SET capacity = (SELECT COUNT(*) FROM Cell c WHERE c.blockID = b.blockID);
+END;
+/
+
+--prisoner
+INSERT INTO Prisoner (prisonerID, name, age, gender, blood_group, crime, date_of_imprisonment, total_sentence, emergency_contact, cellID) VALUES
+('P001', 'Tom Hardy', 35, 'M', 'O+', 'Felony', TO_DATE('2022-01-15', 'YYYY-MM-DD'), 5, '1234567890', 'C001');
+INSERT INTO Prisoner (prisonerID, name, age, gender, blood_group, crime, date_of_imprisonment, total_sentence, emergency_contact, cellID) VALUES
+('P002', 'Jerry Mouse', 28, 'M', 'A-', 'Misdemeanor', TO_DATE('2023-03-20', 'YYYY-MM-DD'), 2, '2345678901', 'C002');
+INSERT INTO Prisoner (prisonerID, name, age, gender, blood_group, crime, date_of_imprisonment, total_sentence, emergency_contact, cellID) VALUES
+('P003', 'Harry Potter', 30, 'M', 'B+', 'Felony', TO_DATE('2021-07-10', 'YYYY-MM-DD'), 6, '3456789012', 'C003');
+INSERT INTO Prisoner (prisonerID, name, age, gender, blood_group, crime, date_of_imprisonment, total_sentence, emergency_contact, cellID) VALUES
+('P004', 'Hermione', 29, 'F', 'AB+', 'Infraction', TO_DATE('2024-02-05', 'YYYY-MM-DD'), 1, '4567890123', 'C004');
+INSERT INTO Prisoner (prisonerID, name, age, gender, blood_group, crime, date_of_imprisonment, total_sentence, emergency_contact, cellID) VALUES
+('P005', 'Ron Weasley', 31, 'M', 'O-', 'Felony', TO_DATE('2020-11-20', 'YYYY-MM-DD'), 7, '5678901234', 'C005');
+INSERT INTO Prisoner (prisonerID, name, age, gender, blood_group, crime, date_of_imprisonment, total_sentence, emergency_contact, cellID) VALUES
+('P006', 'Draco Malfoy', 32, 'M', 'A+', 'Misdemeanor', TO_DATE('2022-09-15', 'YYYY-MM-DD'), 3, '6789012345', 'C006');
+INSERT INTO Prisoner (prisonerID, name, age, gender, blood_group, crime, date_of_imprisonment, total_sentence, emergency_contact, cellID) VALUES
+('P007', 'Luna Lovegood', 27, 'F', 'B-', 'Infraction', TO_DATE('2024-01-10', 'YYYY-MM-DD'), 1, '7890123456', 'C007');
+INSERT INTO Prisoner (prisonerID, name, age, gender, blood_group, crime, date_of_imprisonment, total_sentence, emergency_contact, cellID) VALUES
+('P008', 'Neville', 33, 'M', 'AB-', 'Felony', TO_DATE('2019-08-25', 'YYYY-MM-DD'), 8, '8901234567', 'C008');
+INSERT INTO Prisoner (prisonerID, name, age, gender, blood_group, crime, date_of_imprisonment, total_sentence, emergency_contact, cellID) VALUES
+('P009', 'Ginny Weasley', 26, 'F', 'O+', 'Misdemeanor', TO_DATE('2023-05-30', 'YYYY-MM-DD'), 2, '9012345678', 'C009');
+INSERT INTO Prisoner (prisonerID, name, age, gender, blood_group, crime, date_of_imprisonment, total_sentence, emergency_contact, cellID) VALUES
+('P010', 'Fred Weasley', 34, 'M', 'A+', 'Felony', TO_DATE('2018-12-05', 'YYYY-MM-DD'), 9, '0123456789', 'C010');
+
+--lawyer
+INSERT INTO Lawyer (lawyerID, name, contact_no) VALUES
+('L001', 'Harvey Specter', '1122334455');
+INSERT INTO Lawyer (lawyerID, name, contact_no) VALUES
+('L002', 'Mike Ross', '2233445566');
+INSERT INTO Lawyer (lawyerID, name, contact_no) VALUES
+('L003', 'Jessica Pearson', '3344556677');
+INSERT INTO Lawyer (lawyerID, name, contact_no) VALUES
+('L004', 'Louis Litt', '4455667788');
+INSERT INTO Lawyer (lawyerID, name, contact_no) VALUES
+('L005', 'Donna Paulsen', '5566778899');
+
+--Guards
+INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) VALUES
+('G001', 'James Wilson', 32, 'M', '8877665544', 45000.00, TO_DATE('2018-03-15', 'YYYY-MM-DD'), 7, 'B001', 'J001');
+INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) VALUES
+('G002', 'Sarah Johnson', 29, 'F', '7766554433', 43000.00, TO_DATE('2019-06-20', 'YYYY-MM-DD'), 6, 'B001', 'J001');
+INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) VALUES
+('G003', 'Michael Brown', 35, 'M', '6655443322', 46000.00, TO_DATE('2017-09-10', 'YYYY-MM-DD'), 8, 'B002', 'J002');
+INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) VALUES
+('G004', 'Emily Davis', 31, 'F', '5544332211', 44000.00, TO_DATE('2018-11-05', 'YYYY-MM-DD'), 7, 'B002', 'J002');
+INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) VALUES
+('G005', 'Daniel Smith', 33, 'M', '4433221100', 45500.00, TO_DATE('2017-05-25', 'YYYY-MM-DD'), 8, 'B003', 'J003');
+INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) VALUES
+('G006', 'Olivia Taylor', 30, 'F', '3322110099', 43500.00, TO_DATE('2019-02-15', 'YYYY-MM-DD'), 6, 'B003', 'J003');
+INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) VALUES
+('G007', 'William Jones', 34, 'M', '2211009988', 46500.00, TO_DATE('2016-08-20', 'YYYY-MM-DD'), 9, 'B004', 'J004');
+INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) VALUES
+('G008', 'Sophia Miller', 28, 'F', '1100998877', 42500.00, TO_DATE('2020-04-10', 'YYYY-MM-DD'), 5, 'B004', 'J004');
+INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) VALUES
+('G009', 'Ethan Wilson', 36, 'M', '0099887766', 47000.00, TO_DATE('2015-10-15', 'YYYY-MM-DD'), 10, 'B005', 'J005');
+INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) VALUES
+('G010', 'Ava Anderson', 32, 'F', '9988776655', 44500.00, TO_DATE('2018-07-25', 'YYYY-MM-DD'), 7, 'B005', 'J005');
+
+--unique constrain voilation
+--INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) VALUES
+--('G011', 'Noah Thomas', 29, 'M', '8877665544', 43000.00, TO_DATE('2019-12-05', 'YYYY-MM-DD'), 6, 'B006', 'J006');
+--INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) VALUES
+--('G012', 'Isabella White', 31, 'F', '7766554433', 44000.00, TO_DATE('2018-09-15', 'YYYY-MM-DD'), 7, 'B006', 'J006');
+
+INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) 
+VALUES ('G013', 'Noah Thomas', 29, 'M', '8877665545', 43000.00, TO_DATE('2019-12-05', 'YYYY-MM-DD'), 6, 'B006', 'J006');
+
+INSERT INTO Guards (employeeID, name, age, gender, contact_no, salary, DOJ, YOE, assigned_block, supervisorID) 
+VALUES ('G014', 'Isabella White', 31, 'F', '7766554434', 44000.00, TO_DATE('2018-09-15', 'YYYY-MM-DD'), 7, 'B006', 'J006');
+
+
+--case 
+INSERT INTO Case (caseID, prisonerID, lawyerID, case_status, sentence_duration) VALUES
+('CASE001', 'P001', 'L001', 'closed', 5);
+INSERT INTO Case (caseID, prisonerID, lawyerID, case_status, sentence_duration) VALUES
+('CASE002', 'P002', 'L002', 'closed', 2);
+INSERT INTO Case (caseID, prisonerID, lawyerID, case_status, sentence_duration) VALUES
+('CASE003', 'P003', 'L003', 'closed', 6);
+INSERT INTO Case (caseID, prisonerID, lawyerID, case_status, sentence_duration) VALUES
+('CASE004', 'P004', 'L004', 'closed', 1);
+INSERT INTO Case (caseID, prisonerID, lawyerID, case_status, sentence_duration) VALUES
+('CASE005', 'P005', 'L005', 'closed', 7);
+INSERT INTO Case (caseID, prisonerID, lawyerID, case_status, sentence_duration) VALUES
+('CASE006', 'P006', 'L001', 'closed', 3);
+INSERT INTO Case (caseID, prisonerID, lawyerID, case_status, sentence_duration) VALUES
+('CASE007', 'P007', 'L002', 'ongoing', NULL);
+INSERT INTO Case (caseID, prisonerID, lawyerID, case_status, sentence_duration) VALUES
+('CASE008', 'P008', 'L003', 'closed', 8);
+INSERT INTO Case (caseID, prisonerID, lawyerID, case_status, sentence_duration) VALUES
+('CASE009', 'P009', 'L004', 'ongoing', NULL);
+INSERT INTO Case (caseID, prisonerID, lawyerID, case_status, sentence_duration) VALUES
+('CASE010', 'P010', 'L005', 'closed', 9);
+INSERT INTO Case (caseID, prisonerID, lawyerID, case_status, sentence_duration) VALUES
+('CASE011', 'P001', 'L003', 'ongoing', NULL);
+INSERT INTO Case (caseID, prisonerID, lawyerID, case_status, sentence_duration) VALUES
+('CASE012', 'P003', 'L001', 'ongoing', NULL);
+
+-- new trigger 3
+CREATE OR REPLACE TRIGGER update_total_sentence
+FOR INSERT OR UPDATE OR DELETE ON Case
+COMPOUND TRIGGER
+    -- Collection to store affected prisoner IDs
+    TYPE prisoner_id_array IS TABLE OF Prisoner.prisonerID%TYPE INDEX BY PLS_INTEGER;
+    affected_prisoners prisoner_id_array;
+    idx NUMBER := 0;
+
+    -- After each row is processed
+    AFTER EACH ROW IS
+    BEGIN
+        -- For INSERT operations
+        IF INSERTING THEN
+            idx := idx + 1;
+            affected_prisoners(idx) := :NEW.prisonerID;
+        
+        -- For UPDATE operations that change the prisonerID
+        ELSIF UPDATING THEN
+            IF :OLD.prisonerID != :NEW.prisonerID OR 
+               :OLD.sentence_duration != :NEW.sentence_duration THEN
+                -- Store both old and new prisoner IDs if they differ
+                IF :OLD.prisonerID != :NEW.prisonerID THEN
+                    idx := idx + 1;
+                    affected_prisoners(idx) := :OLD.prisonerID;
+                END IF;
+                
+                idx := idx + 1;
+                affected_prisoners(idx) := :NEW.prisonerID;
+            END IF;
+        
+        -- For DELETE operations
+        ELSIF DELETING THEN
+            idx := idx + 1;
+            affected_prisoners(idx) := :OLD.prisonerID;
+        END IF;
+    END AFTER EACH ROW;
+
+    -- After the entire statement completes
+    AFTER STATEMENT IS
+        unique_prisoners prisoner_id_array;
+        unique_idx NUMBER := 0;
+        found BOOLEAN;
+    BEGIN
+        -- Collect unique prisoner IDs
+        FOR i IN 1..idx LOOP
+            found := FALSE;
+            
+            -- Check if this prisoner ID is already in our unique list
+            FOR j IN 1..unique_idx LOOP
+                IF unique_prisoners(j) = affected_prisoners(i) THEN
+                    found := TRUE;
+                    EXIT;
+                END IF;
+            END LOOP;
+            
+            -- If not found, add to unique list
+            IF NOT found THEN
+                unique_idx := unique_idx + 1;
+                unique_prisoners(unique_idx) := affected_prisoners(i);
+            END IF;
+        END LOOP;
+        
+        -- Update total_sentence for each affected prisoner
+        FOR i IN 1..unique_idx LOOP
+            UPDATE Prisoner
+            SET total_sentence = (
+                SELECT COALESCE(SUM(sentence_duration), 0)
+                FROM Case
+                WHERE prisonerID = unique_prisoners(i)
+            )
+            WHERE prisonerID = unique_prisoners(i);
+        END LOOP;
+    END AFTER STATEMENT;
+END update_total_sentence;
+/
+
+--guard supervises cell table
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G001', 'C001');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G001', 'C002');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G002', 'C003');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G003', 'C004');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G003', 'C005');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G004', 'C006');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G005', 'C007');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G005', 'C008');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G006', 'C009');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G007', 'C010');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G007', 'C011');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G008', 'C012');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G009', 'C013');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G010', 'C014');
+INSERT INTO Guard_Supervises_Cell (guardID, cellID) VALUES
+('G013', 'C015');
+
+
+
+
+
+
+
+
+

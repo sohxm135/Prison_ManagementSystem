@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SecureGuard - Lawyer Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <!-- Same sidebar as other pages -->
+        <div class="sidebar-header">
+            <h2><i class="fas fa-shield-alt"></i> SecureGuard</h2>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                <!-- ... other menu items ... -->
+                <li><a href="lawyer.html" class="active"><i class="fas fa-gavel"></i>Lawyer</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h2 class="page-title">Lawyer Details</h2>
+        <div class="lawyer-info">
+            <h3>Lawyer Information</h3>
+            <div id="lawyerDetails">
+                <!-- Lawyer details will be populated dynamically -->
+            </div>
+        </div>
+
+        <div class="data-table">
+            <h3>Represented Prisoners</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Prisoner ID</th>
+                        <th>Prisoner Name</th>
+                        <th>Case Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="prisonersList">
+                    <tr>
+                        <td>P-1001</td>
+                        <td>John Doe</td>
+                        <td>Ongoing</td>
+                        <td>
+                            <button class="btn view-btn">View Case</button>
+                        </td>
+                    </tr>
+                    <!-- More prisoners will be added dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

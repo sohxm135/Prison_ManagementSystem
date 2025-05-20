@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Logs - SecureGuard Prison Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-shield-alt"></i> SecureGuard</h2>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+              <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+              <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+              <li><a href="jail-info.html"><i class="fas fa-building"></i> Prison Info</a></li>
+              <li><a href="prisoners.html"><i class="fas fa-users"></i> Prisoners</a></li>
+              <li><a href="staff.html"><i class="fas fa-id-card"></i> Staff</a></li>
+              <li><a href="cases.html"><i class="fas fa-gavel"></i> Cases</a></li>
+              <li><a href="disciplinary.html"><i class="fas fa-balance-scale"></i> Disciplinary Actions</a></li>
+              <li><a href="work-assigned.html"><i class="fas fa-tasks"></i> Work Assigned</a></li>
+              <li><a href="library.html"><i class="fas fa-book"></i> Library</a></li>
+              <li><a href="call-logs.html" class="active"><i class="fas fa-phone"></i> Call Logs</a></li>
+              <li><a href="visitors.html"><i class="fas fa-user-friends"></i> Visitors</a></li>
+              <li><a href="lawyer.html"><i class="fas fa-gavel"></i> Lawyer</a></li>
+              <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="topbar">
+            <button class="toggle-sidebar"><i class="fas fa-bars"></i></button>
+            <div class="user-info">
+                <span><B>Warden User</B></span>
+                <!-- <div class="user-avatar"><i class="fas fa-user"></i></div> -->
+            </div>
+        </div>
+        <h1 class="page-title">Call Logs</h1>
+        
+        <div class="filter-section">
+            <div class="filter-group">
+                <input type="text" placeholder="Search by ID, prisoner or receiver name...">
+                <!-- <input type="date" placeholder="Filter by date">
+                <button class="btn"><i class="fas fa-search"></i> Search</button> -->
+                <button class="btn add-call-log-btn"><i class="fas fa-plus"></i> Add Call Log</button>
+            </div>
+        </div>
+        
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Log ID</th>
+                        <th>Prisoner ID</th>
+                        <th>Prisoner Name</th>
+                        <th>Receiver</th>
+                        <th>Relation</th>
+                        <th>Duration</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CL-001</td>
+                        <td>P-1003</td>
+                        <td>Robert Johnson</td>
+                        <td>Sarah Johnson</td>
+                        <td>Wife</td>
+                        <td>10 min</td>
+                        <td>2025-03-22</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CL-002</td>
+                        <td>P-1002</td>
+                        <td>Jane Smith</td>
+                        <td>Tom Smith</td>
+                        <td>Brother</td>
+                        <td>5 min</td>
+                        <td>2025-04-01</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="main.js"></script>
+    <script src="call-logs.js"></script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+CREATE TABLE Call_Log (
+    callLogID varchar(15) PRIMARY KEY,
+    prisonerID varchar(15) NOT NULL,
+    receiver_name VARCHAR2(15) NOT NULL,
+    receiver_relation VARCHAR2(15),
+    duration VARCHAR2(10) NOT NULL,
+    call_date DATE NOT NULL,
+    FOREIGN KEY (prisonerID) REFERENCES Prisoner(prisonerID)
+);
+
+CREATE TABLE Disciplinary_Action (
+    actionID varchar(15) PRIMARY KEY,
+    prisonerID VARCHAR2(15) NOT NULL,
+    action_date DATE NOT NULL,
+    reason VARCHAR2(100) NOT NULL,
+    FOREIGN KEY (prisonerID) REFERENCES Prisoner(prisonerID)
+);
+
+CREATE TABLE Visitors (
+    visitorNo varchar(15) PRIMARY KEY,
+    prisonerID varchar(15) NOT NULL,
+    name VARCHAR2(15) NOT NULL,
+    visitor_relation VARCHAR2(20),
+    visit_date DATE NOT NULL,
+    visit_time VARCHAR2(10) NOT NULL,
+    FOREIGN KEY (prisonerID) REFERENCES Prisoner(prisonerID)
+);
+
+CREATE TABLE Library (
+    bookID varchar(15) PRIMARY KEY,
+    title VARCHAR2(100) NOT NULL,
+    author VARCHAR2(50) NOT NULL,
+    genre VARCHAR2(30),
+    availability_status VARCHAR2(20) NOT NULL CHECK (availability_status IN ('Available', 'Issued'))
+);
+
+CREATE TABLE book_issues (
+    prisonerID varchar(15),
+    bookID varchar(15),
+    issue_date DATE NOT NULL,
+    return_date DATE,
+    PRIMARY KEY (prisonerID, bookID),
+    FOREIGN KEY (prisonerID) REFERENCES Prisoner(prisonerID),
+    FOREIGN KEY (bookID) REFERENCES Library(bookID)
+);
+
+CREATE TABLE Prison_Labor (
+    prisonerID varchar(15) PRIMARY KEY,
+    department VARCHAR2(50) NOT NULL,
+    FOREIGN KEY (prisonerID) REFERENCES Prisoner(prisonerID)
+);
+
+CREATE TABLE Mess_Labor (
+    prisonerID varchar(15) PRIMARY KEY,
+    FOREIGN KEY (prisonerID) REFERENCES Prison_Labor(prisonerID)
+);
+
+CREATE TABLE Cleaning_Labor (
+    prisonerID varchar(15) PRIMARY KEY,
+    assigned_area VARCHAR2(100) NOT NULL,
+    FOREIGN KEY (prisonerID) REFERENCES Prison_Labor(prisonerID)
+);
+
+CREATE TABLE Librarian (
+    prisonerID varchar(15) PRIMARY KEY,
+    FOREIGN KEY (prisonerID) REFERENCES Prisoner(prisonerID)
+);
+
+
+--insert statements
+
+--call log
+
+INSERT INTO Call_Log (callLogID, prisonerID, receiver_name, receiver_relation, duration, call_date) VALUES
+('CL001', 'P001', 'Martha Hardy', 'Mother', '15:30', TO_DATE('2024-12-15', 'YYYY-MM-DD'));
+
+INSERT INTO Call_Log (callLogID, prisonerID, receiver_name, receiver_relation, duration, call_date) VALUES
+('CL002', 'P003', 'Sirius Black', 'Godfather', '10:45', TO_DATE('2025-01-20', 'YYYY-MM-DD'));
+
+INSERT INTO Call_Log (callLogID, prisonerID, receiver_name, receiver_relation, duration, call_date) VALUES
+('CL003', 'P005', 'Molly Weasley', 'Mother', '20:15', TO_DATE('2025-02-05', 'YYYY-MM-DD'));
+
+INSERT INTO Call_Log (callLogID, prisonerID, receiver_name, receiver_relation, duration, call_date) VALUES
+('CL004', 'P007', 'Xenophilius', 'Father', '12:30', TO_DATE('2025-03-10', 'YYYY-MM-DD'));
+
+INSERT INTO Call_Log (callLogID, prisonerID, receiver_name, receiver_relation, duration, call_date) VALUES
+('CL005', 'P009', 'Arthur Weasley', 'Father', '18:20', TO_DATE('2025-04-01', 'YYYY-MM-DD'));
+
+--Disciplinary
+
+INSERT INTO Disciplinary_Action (actionID, prisonerID, action_date, reason) VALUES
+('DA001', 'P002', TO_DATE('2024-11-10', 'YYYY-MM-DD'), 'Fighting with another inmate');
+
+INSERT INTO Disciplinary_Action (actionID, prisonerID, action_date, reason) VALUES
+('DA002', 'P006', TO_DATE('2024-12-05', 'YYYY-MM-DD'), 'Possession of contraband');
+
+INSERT INTO Disciplinary_Action (actionID, prisonerID, action_date, reason) VALUES
+('DA003', 'P003', TO_DATE('2025-01-15', 'YYYY-MM-DD'), 'Attempted escape');
+
+INSERT INTO Disciplinary_Action (actionID, prisonerID, action_date, reason) VALUES
+('DA004', 'P008', TO_DATE('2025-02-20', 'YYYY-MM-DD'), 'Insubordination to guard G005');
+
+INSERT INTO Disciplinary_Action (actionID, prisonerID, action_date, reason) VALUES
+('DA005', 'P010', TO_DATE('2025-03-25', 'YYYY-MM-DD'), 'Damaging prison property in Block F');
+
+--visitor
+
+INSERT INTO Visitors (visitorNo, prisonerID, name, visitor_relation, visit_date, visit_time) VALUES
+('V001', 'P001', 'John Hardy', 'Brother', TO_DATE('2025-01-05', 'YYYY-MM-DD'), '10:00 AM');
+
+INSERT INTO Visitors (visitorNo, prisonerID, name, visitor_relation, visit_date, visit_time) VALUES
+('V002', 'P003', 'Albus', 'Friend', TO_DATE('2025-02-10', 'YYYY-MM-DD'), '2:30 PM');
+
+INSERT INTO Visitors (visitorNo, prisonerID, name, visitor_relation, visit_date, visit_time) VALUES
+('V003', 'P004', 'Viktor Krum', 'Friend', TO_DATE('2025-03-15', 'YYYY-MM-DD'), '11:15 AM');
+
+INSERT INTO Visitors (visitorNo, prisonerID, name, visitor_relation, visit_date, visit_time) VALUES
+('V004', 'P007', 'Rolf Scamander', 'Husband', TO_DATE('2025-04-05', 'YYYY-MM-DD'), '3:45 PM');
+
+INSERT INTO Visitors (visitorNo, prisonerID, name, visitor_relation, visit_date, visit_time) VALUES
+('V005', 'P009', 'Harry Potter', 'Brother-in-law', TO_DATE('2025-04-12', 'YYYY-MM-DD'), '1:00 PM');
+
+
+--library
+
+INSERT INTO Library (bookID, title, author, genre, availability_status) VALUES
+('B001', 'The Shawshank Redemption', 'Stephen King', 'Fiction', 'Available');
+
+INSERT INTO Library (bookID, title, author, genre, availability_status) VALUES
+('B002', 'Law and Justice', 'Harvey Specter', 'Legal', 'Available');
+
+INSERT INTO Library (bookID, title, author, genre, availability_status) VALUES
+('B003', 'Hogwarts: A History', 'Bathilda Bagshot', 'History', 'Available');
+
+INSERT INTO Library (bookID, title, author, genre, availability_status) VALUES
+('B004', 'Advanced Potion Making', 'Libatius Borage', 'Education', 'Available');
+
+INSERT INTO Library (bookID, title, author, genre, availability_status) VALUES
+('B005', 'The Count of Monte Cristo', 'Alexandre Dumas', 'Adventure', 'Available');
+
+--book_issues
+
+INSERT INTO book_issues (prisonerID, bookID, issue_date, return_date) VALUES
+('P001', 'B001', TO_DATE('2025-01-10', 'YYYY-MM-DD'), TO_DATE('2025-01-25', 'YYYY-MM-DD'));
+
+INSERT INTO book_issues(prisonerID, bookID, issue_date, return_date) VALUES
+('P003', 'B003', TO_DATE('2025-02-05', 'YYYY-MM-DD'), NULL);
+
+UPDATE Library SET availability_status = 'Issued' WHERE bookID = 'B003';
+
+INSERT INTO book_issues(prisonerID, bookID, issue_date, return_date) VALUES
+('P004', 'B004', TO_DATE('2025-02-15', 'YYYY-MM-DD'), NULL);
+
+UPDATE Library SET availability_status = 'Issued' WHERE bookID = 'B004';
+
+INSERT INTO book_issues (prisonerID, bookID, issue_date, return_date) VALUES
+('P007', 'B005', TO_DATE('2025-03-01', 'YYYY-MM-DD'), TO_DATE('2025-03-15', 'YYYY-MM-DD'));
+
+INSERT INTO book_issues(prisonerID, bookID, issue_date, return_date) VALUES
+('P009', 'B002', TO_DATE('2025-04-05', 'YYYY-MM-DD'), NULL);
+
+UPDATE Library SET availability_status = 'Issued' WHERE bookID = 'B002';
+
+
+--prison labour
+
+INSERT INTO Prison_Labor (prisonerID, department) VALUES
+('P002', 'Kitchen');
+
+INSERT INTO Prison_Labor (prisonerID, department) VALUES
+('P005', 'Laundry');
+
+INSERT INTO Prison_Labor (prisonerID, department) VALUES
+('P006', 'Cleaning');
+
+INSERT INTO Prison_Labor (prisonerID, department) VALUES
+('P008', 'Library');
+
+INSERT INTO Prison_Labor (prisonerID, department) VALUES
+('P010', 'Maintenance');
+
+
+
+INSERT INTO Mess_Labor (prisonerID) VALUES
+('P002');
+
+INSERT INTO Cleaning_Labor (prisonerID, assigned_area) VALUES
+('P006', 'Block B - Cells C004 to C006');
+
+INSERT INTO Librarian (prisonerID) VALUES
+('P003');
